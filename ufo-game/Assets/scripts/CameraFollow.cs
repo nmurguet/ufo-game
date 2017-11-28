@@ -33,4 +33,11 @@ public class CameraFollow : MonoBehaviour {
 		}
 		
 	}
+
+
+	public void ChangeTarget(Transform tar)
+	{
+		target = tar;
+
+	}
 }

@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Walker : MonoBehaviour {
 
+	public GameController controller; 
+
 	public KeyCode left;
 	public KeyCode right;
 	public KeyCode jump; 
@@ -37,6 +39,9 @@ public class Walker : MonoBehaviour {
 	public ParticleSystem mainParticle; 
 
 
+	public bool onShip;
+
+
 
 
 
@@ -46,14 +51,19 @@ public class Walker : MonoBehaviour {
 
 		rb = GetComponent<Rigidbody2D> (); 
 		anim = GetComponent<Animator> (); 
+		controller = FindObjectOfType<GameController> (); 
 		hasJetpack = false; 
 		pfuel = fuel; 
+		onShip = false; 
 		
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		Movement (); 
+		if (onShip && Input.GetKeyDown (action)) {
+			controller.EnterShip ();  
+		}
 		
 	}
 
@@ -142,6 +152,22 @@ public class Walker : MonoBehaviour {
 			hasJetpack = true; 
 			Destroy (other.gameObject);
 
+		}
+
+		if (other.gameObject.tag == "shipUnmanned") {
+			onShip = true; 
+
+		}
+
+
+
+	}
+
+	void OnTriggerExit2D(Collider2D other)
+	{
+		if (other.gameObject.tag == "shipUnmanned") {
+			onShip = false; 
+			 
 		}
 
 	}
