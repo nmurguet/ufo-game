@@ -46,6 +46,11 @@ public class Ufo : MonoBehaviour {
 
 	public bool canFly;
 
+	public ParticleSystem mainParticle; 
+	public ParticleSystem slowParticle; 
+	public ParticleSystem leftParticle; 
+	public ParticleSystem rightParticle; 
+
 	// Use this for initialization
 	void Start () {
 
@@ -53,7 +58,7 @@ public class Ufo : MonoBehaviour {
 		rb = GetComponent<Rigidbody2D> (); 
 		startPos = start.transform.position;
 		endPos = end.transform.position;
-		retracted = false; 
+		retracted = true; 
 		landingGear.position = endPos;
 		canFly = false; 
 		
@@ -61,6 +66,7 @@ public class Ufo : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		ParticleManager ();
 		
 		if (canFly) {
 			Movement (); 
@@ -160,6 +166,37 @@ public class Ufo : MonoBehaviour {
 		} else {
 		dome.transform.rotation = Quaternion.Slerp (dome.transform.rotation, Quaternion.Euler (0f, 0f, 0f), rotateDome*Time.deltaTime);
 		}
+
+
+	}
+
+
+	void ParticleManager()
+	{
+		if (Input.GetKey (up)) {
+			mainParticle.Play ();
+		} else {
+			mainParticle.Stop (); 
+		}
+
+		if (Input.GetKey (slowUp)) {
+			slowParticle.Play (); 
+		} else {
+			slowParticle.Stop (); 
+		}
+
+		if (Input.GetKey (left)) {
+			leftParticle.Play (); 
+		} else {
+			leftParticle.Stop (); 
+		}
+
+		if (Input.GetKey (right)) {
+			rightParticle.Play (); 
+		} else {
+			rightParticle.Stop (); 
+		}
+		
 
 
 	}

@@ -8,15 +8,31 @@ public class CameraFollow : MonoBehaviour {
 
 	public float speed; 
 
+	public float speedChange; 
+
 	public bool following; 
 
 
 	public Vector3 offset;
 
+
+	public Vector3 offset_ship;
+
+	public Vector3 offset_walker; 
+
+	public bool onWalker;
+
+	public bool change; 
+
 	// Use this for initialization
 	void Start () {
 
 		following = true; 
+		change = false; 
+		offset_walker = offset; 
+		offset_ship = offset;
+		offset_ship.y = 0f;
+		onWalker = true; 
 
 
 		
@@ -35,9 +51,57 @@ public class CameraFollow : MonoBehaviour {
 	}
 
 
+
+
 	public void ChangeTarget(Transform tar)
 	{
 		target = tar;
 
 	}
+
+	void Update()
+	{
+		if (change && onWalker) {
+			offset = Vector3.Lerp (offset, offset_walker, speedChange);
+
+
+		} else if (change && !onWalker) {
+			offset = Vector3.Lerp (offset, offset_ship, speedChange);
+		}
+
+
+	}
+
+	public void ChangeOffset()
+	{
+		if (onWalker) {
+			//offset = Vector3.Lerp (offset, offset_ship, speed);
+			//offset = offset_ship;
+			StartCoroutine(waitandCancel(3f));
+			change = true;
+			onWalker = false; 
+
+		} else {
+			//offset = offset_walker;
+			StartCoroutine(waitandCancel(3f));
+			change = true; 
+			onWalker = true; 
+		}
+
+
+	}
+
+	IEnumerator waitandCancel(float seconds)
+	{
+		yield return new WaitForSeconds (seconds);
+		change = false;
+		if (onWalker) {
+			offset = offset_walker;
+		} else {
+			offset = offset_ship;
+		}
+	}
+
+
+
 }

@@ -46,6 +46,7 @@ public class GameController : MonoBehaviour {
 			walker.gameObject.SetActive (false); 
 			StartCoroutine (waitandLaunch (1.5f));
 			myCam.ChangeTarget (ufo.transform);
+			myCam.ChangeOffset (); 
 			onShip = true; 
 		}
 
@@ -61,6 +62,7 @@ public class GameController : MonoBehaviour {
 			walker.transform.position = ufo.transform.position;
 			walker.gameObject.SetActive (true); 
 			myCam.ChangeTarget (walker.transform);
+			myCam.ChangeOffset (); 
 			onShip = false; 
 		}
 
