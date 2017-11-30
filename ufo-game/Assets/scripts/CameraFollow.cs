@@ -24,6 +24,11 @@ public class CameraFollow : MonoBehaviour {
 
 	public bool change; 
 
+	public Ufo ufo; 
+	public float maxSpeed; 
+	public float maxZoom; 
+	public float minZoom; 
+
 	// Use this for initialization
 	void Start () {
 
@@ -34,6 +39,7 @@ public class CameraFollow : MonoBehaviour {
 		offset_ship.y = 0f;
 		onWalker = true; 
 
+		minZoom = Camera.main.orthographicSize;
 
 		
 	}
@@ -46,6 +52,21 @@ public class CameraFollow : MonoBehaviour {
 			if (target) {
 				transform.position = Vector3.Lerp (transform.position + offset, target.position, speed); 
 			}
+		}
+
+
+		if (ufo.getSpeed > maxSpeed) {
+			Camera.main.orthographicSize +=2f * Time.deltaTime; 
+
+		} else if (ufo.getSpeed < maxSpeed) {
+			Camera.main.orthographicSize -= 2f * Time.deltaTime; 
+		}
+
+		if (Camera.main.orthographicSize > maxZoom) {
+			Camera.main.orthographicSize = maxZoom;
+		}
+		if (Camera.main.orthographicSize < minZoom) {
+			Camera.main.orthographicSize = minZoom;
 		}
 		
 	}

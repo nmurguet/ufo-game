@@ -21,6 +21,8 @@ public class Ufo : MonoBehaviour {
 	public GameObject dome; 
 	public float rotateDome;
 
+	public float getSpeed;
+
 
 	public Rigidbody2D rb; 
 
@@ -61,11 +63,12 @@ public class Ufo : MonoBehaviour {
 		retracted = true; 
 		landingGear.position = endPos;
 		canFly = false; 
-		
+		getSpeed = 0; 
 	}
 	
 	// Update is called once per frame
 	void Update () {
+		getSpeed = rb.velocity.magnitude; 
 		ParticleManager ();
 		
 		if (canFly) {
