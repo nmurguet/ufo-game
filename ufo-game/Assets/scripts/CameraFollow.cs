@@ -50,7 +50,10 @@ public class CameraFollow : MonoBehaviour {
 		if (following == true) {
 
 			if (target) {
-				transform.position = Vector3.Lerp (transform.position + offset, target.position, speed); 
+				Vector3 desiredPosition = target.position + offset;
+				Vector3 smoothPosition = Vector3.Lerp (transform.position, desiredPosition, speed * Time.deltaTime);
+				//smoothPosition.z = -10f; 
+				transform.position = smoothPosition; 
 			}
 		}
 
